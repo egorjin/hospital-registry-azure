@@ -30,6 +30,7 @@ The CMS Provider Data Catalog often rotates the underlying **download file URL**
 - Dataset page (stable id): `xubh-q36u` (Hospital General Information)
 - Metastore API pattern:
   - `https://data.cms.gov/provider-data/api/1/metastore/schemas/dataset/items/<DATASET_ID>?show-reference-ids=false`
+  - `https://data.cms.gov/provider-data/api/1/metastore/schemas/dataset/items/xubh-q36u?show-reference-ids=false`
 
 This is the approach used in the included Databricks notebook.
 
