@@ -1,10 +1,11 @@
 # ADF Pipeline: pl_hospital_general_information_to_medallion
 
-This doc tells you exactly what to build in **Azure Data Factory**.
-
 ## Goal
 - Copy public CMS CSV (HTTP) into ADLS **Bronze**
 - Trigger Databricks notebook to produce **Silver** and **Gold** Delta outputs
+
+**Public CSV used**
+- https://data.cms.gov/provider-data/sites/default/files/resources/092256becd267d9eeccf73bf7d16c46b_1689206722/Hospital_General_Information.csv
 
 ---
 
@@ -13,7 +14,6 @@ This doc tells you exactly what to build in **Azure Data Factory**.
 ### 1.1 HTTP
 - Type: HTTP
 - Auth: Anonymous (no auth)
-- Base URL: (optional) leave blank and use full URL in dataset or parameter
 
 ### 1.2 ADLS Gen2
 - Type: Azure Data Lake Storage Gen2
@@ -35,8 +35,8 @@ This doc tells you exactly what to build in **Azure Data Factory**.
 ## 2) Datasets
 
 ### 2.1 HTTP dataset (DelimitedText)
-- Relative URL / or full URL:
-  - `https://data.medicare.gov/api/views/xubh-q36u/rows.csv?accessType=DOWNLOAD`
+- URL:
+  - `https://data.cms.gov/provider-data/sites/default/files/resources/092256becd267d9eeccf73bf7d16c46b_1689206722/Hospital_General_Information.csv`
 - First row as header: True
 - Column delimiter: comma
 - Encoding: UTF-8
@@ -48,7 +48,6 @@ This doc tells you exactly what to build in **Azure Data Factory**.
   - `hospital_general_information/run_date=@{pipeline().parameters.run_date}`
 - File name:
   - `hospital_general_information.csv`
-- First row as header: True
 
 ---
 
@@ -61,21 +60,15 @@ Pipeline name:
 - `run_date` (String)
   - Default: `@formatDateTime(utcNow(),'yyyy-MM-dd')`
 - `source_url` (String)
-  - Default: `https://data.medicare.gov/api/views/xubh-q36u/rows.csv?accessType=DOWNLOAD`
+  - Default: `https://data.cms.gov/provider-data/sites/default/files/resources/092256becd267d9eeccf73bf7d16c46b_1689206722/Hospital_General_Information.csv`
 - `storage_account` (String)
   - Default: your storage account name (e.g., `sthcmedallion01`)
 
 ### 3.2 Activities
 
 #### Activity 1 — Copy data (HTTP → ADLS Bronze)
-- Source: HTTP dataset
-  - If parameterized, set the dataset URL from `source_url`
-- Sink: ADLS Bronze dataset
-  - Uses `run_date` in the output path
-
-**Recommended**
-- Set retry to 2–3
-- Fail fast (don’t silently skip rows) for portfolio clarity
+- Source: HTTP dataset (or parameterize URL from `source_url`)
+- Sink: ADLS Bronze dataset (uses `run_date` in output path)
 
 #### Activity 2 — Databricks Notebook
 - Linked service: Databricks (MSI)
@@ -88,17 +81,12 @@ Pipeline name:
 
 ---
 
-## 4) Trigger
-Start manual first. After it works, add a daily trigger.
-
----
-
-## 5) Verification checklist
-- ADLS Bronze has a new file at:
+## 4) Verification checklist
+- ADLS Bronze has:
   - `bronze/hospital_general_information/run_date=YYYY-MM-DD/hospital_general_information.csv`
-- ADLS Silver has Delta output at:
+- ADLS Silver has:
   - `silver/hospital_general_information/`
-- ADLS Gold has Delta outputs at:
+- ADLS Gold has:
   - `gold/hospital_general_information/hospitals_by_state/`
   - `gold/hospital_general_information/rating_distribution/`
   - `gold/hospital_general_information/hospitals_by_type/`
