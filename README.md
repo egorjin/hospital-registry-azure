@@ -19,8 +19,8 @@ We ingest a public CMS/Medicare hospital registry CSV, land it in a lake (Bronze
 - hospitals by type
 
 **Data source (public CSV):**
-- Hospital General Information (CMS / Medicare Open Data)
-  - https://data.medicare.gov/api/views/xubh-q36u/rows.csv?accessType=DOWNLOAD
+- Hospital General Information (CMS Provider Data Catalog)
+  - https://data.cms.gov/provider-data/sites/default/files/resources/092256becd267d9eeccf73bf7d16c46b_1689206722/Hospital_General_Information.csv
 
 No PHI. This is safe portfolio data.
 
@@ -112,7 +112,7 @@ Build pipeline: `pl_hospital_general_information_to_medallion`
 
 - Pipeline parameters:
   - `run_date` default: `@formatDateTime(utcNow(),'yyyy-MM-dd')`
-  - `source_url` default: `https://data.medicare.gov/api/views/xubh-q36u/rows.csv?accessType=DOWNLOAD`
+  - `source_url` default: `https://data.cms.gov/provider-data/sites/default/files/resources/092256becd267d9eeccf73bf7d16c46b_1689206722/Hospital_General_Information.csv`
 
 Activities:
 1. **Copy Data** (Source = HTTP dataset, Sink = ADLS Bronze dataset)
@@ -148,9 +148,3 @@ The exact build steps are in `adf/pipeline_pl_hospital_general_information_to_me
 - Real PySpark data cleaning + standardization
 - Delta Lake outputs
 - Managed Identity security patterns (no secrets)
-
----
-
-## Notes
-- Dataset schema can evolve. This notebook is defensive (casts + “Not Available” handling).
-- If the CSV column names differ slightly, update the `expected_cols` mapping in the notebook.
