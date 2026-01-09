@@ -9,14 +9,16 @@ A small, job-relevant Azure data engineering project using **public healthcare C
 
 ---
 
-## 1) Use case (what you say in interviews)
+## 1) Use case 
 
 **“Public healthcare provider registry ingestion + quality-ready curated layer.”**
 
-We ingest a public CMS hospital registry dataset, land it in a lake (Bronze), clean and standardize it (Silver), and publish analyst-ready aggregates (Gold) like:
-- hospitals by state (counts, % with emergency services)
-- rating distribution
-- hospitals by type
+1. Ingest public CMS hospital registry dataset, land it in a lake (Bronze)
+2. Clean and standardize it (Silver)
+3. Publish analyst-ready aggregates (Gold)
+   - hospitals by state (counts, % with emergency services)
+   - rating distribution
+   - hospitals by type
 
 No PHI. This is safe portfolio data.
 
