@@ -1,4 +1,4 @@
-# healthcare-hospitals-medallion01 (ADF + ADLS Gen2 + Databricks, CSV, Managed Identity only)
+# hospital-registry (ADF + ADLS Gen2 + Databricks, CSV, Managed Identity only)
 
 A small, job-relevant Azure data engineering project using **public healthcare CSV data**, **ADLS Gen2**, **Azure Data Factory**, and **Azure Databricks**.
 
@@ -64,7 +64,7 @@ This is the approach used in the included Databricks notebook.
 ## 4) Repo structure
 
 ```
-healthcare-hospitals-medallion01/
+hospital-registry/
 ├── README.md
 ├── .gitignore
 ├── notebooks/
