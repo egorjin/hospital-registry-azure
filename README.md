@@ -81,7 +81,7 @@ hospital-registry/
 
 ### Step 0 — Naming (keep it simple)
 - Resource group: `rg-hospital-registry`
-- Storage account: `sthcmedallion01` (must be globally unique)
+- Storage account: `sthospitalregistry` (must be globally unique)
 - ADF: `adf-healthcare-hospitals01`
 - Databricks: `adb-healthcare-hospitals01`
 
