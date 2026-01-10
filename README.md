@@ -106,21 +106,36 @@ Target layout:
    - Role: **Storage Blob Data Contributor**
    - Assign to: **ADF managed identity**
 
-### Step 3 — Create Databricks + Managed Identity storage access (no secrets)
-To do “no secrets” correctly for Databricks reading/writing ADLS:
-1. Create **Access Connector for Azure Databricks** (system-assigned MI)
-2. Grant that connector RBAC on your storage account:
-   - Role: **Storage Blob Data Contributor**
-3. In Databricks **Unity Catalog**:
-   - Create a **Storage Credential** backed by the Access Connector
-   - Create **External Locations** for your `bronze/`, `silver/`, and `gold/` paths
+### Step 3 — Setup Secure Connection for Databricks (DB <----- ADLS)
+  #### Create a Credential (to be used for an external location)
+  1. `Catalog` → `External Data` → `Credential` → `Create credential`
+  2. Credential type: `Azure Managed Identity`
+  3. Credential name: `hospital-cred`
+  4. Access connector ID: `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector` (**FOUND BELOW**)
+     - Azure portal → `rg-hospital-registry`(resource group) → `adb-hospital-registry` (db resource) →  (in middle of screen) Managed Resource Group: `databricks-rg-adb-hospital-registry-ay3xi2s24t262` → `unity-catalog-access-connector` (link at bottom)
+     <img width="552" height="179" alt="image" src="https://github.com/user-attachments/assets/ee42ad7b-6353-4255-a2a1-6144470dbe40" />
+     <img width="1145" height="473" alt="image" src="https://github.com/user-attachments/assets/3ccf46f6-37d8-463c-b315-ffd44ecd40fd" />
+     <img width="699" height="79" alt="image" src="https://github.com/user-attachments/assets/47bd0f05-ff82-469a-ae69-2d0d19a195ef" /> <br>
+     - COPY Resource ID : `/subscriptions/ca8b577e-9fe../accessConnectors/unity-catalog-access-connector`
 
-See `docs/managed-identity-notes.md` for a practical checklist.
-
+  #### Create External Locations
+  1. `Catalog` → `External Data` → `Create external location`
+  2. Create 3 External Locations for all Medallion Stages
+     1. Bronze
+        1. External location name: `bronze`
+        2. External location name: `abfss://bronze@storehospitalregistry .dfs.core.windows.net/` (**endpoint to ADLS container**)
+        3. Storage Credential: `earthqual-cred` (from 5.3)
+     2. Silver
+        1. External location name: `silver`
+        2. External location name: `abfss://silver@storehospitalregistry .dfs.core.windows.net/` (**endpoint to ADLS container**)
+        3. Storage Credential: `earthqual-cred` (from 5.3)
+     3. Gold
+        1. External location name: `gold`
+        2. External location name: `abfss://gold@storehospitalregistry .dfs.core.windows.net/` (**endpoint to ADLS container**)
+        3. Storage Credential: `earthqual-cred` (from 5.3)
+ 
 ### Step 4 — Import the notebook
-Upload `notebooks/01_hospital_general_info_medallion.py
-
-` to your Databricks workspace.
+Upload `notebooks/01_hospital_general_info_medallion.py` to your Databricks workspace.
 
 ### Step 5 — Build the ADF pipeline (orchestrate notebook)
 Follow `adf/Hospital_Gen_Info.md`.
