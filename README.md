@@ -24,19 +24,16 @@ No PHI. This is safe portfolio data.
 
 ---
 
-## 2) Why your CSV link broke (and how this project avoids it)
+## 2) External Data CSV Links
 
-The CMS Provider Data Catalog often rotates the underlying **download file URL** behind a dataset. That’s why links like “`.../Hospital_General_Info.csv
+The CMS Provider Data Catalog often rotates the underlying **download file URL** behind a dataset. 
 
-`” or older Data.Medicare.gov export links can start failing.
-
-**Fix:** don’t hard-code the CSV file URL. Resolve the **current** download URL at runtime using the Provider Data Catalog **metastore API** and the dataset’s stable id:
+**NOTE** don’t hard-code the CSV file URL.
+- Resolve the **current** download URL at runtime using the Provider Data Catalog **metastore API** and the dataset’s stable id:
 - Dataset page (stable id): `xubh-q36u` (Hospital General Information)
 - Metastore API pattern:
   - `https://data.cms.gov/provider-data/api/1/metastore/schemas/dataset/items/<DATASET_ID>?show-reference-ids=false`
   - `https://data.cms.gov/provider-data/api/1/metastore/schemas/dataset/items/xubh-q36u?show-reference-ids=false`
-
-This is the approach used in the included Databricks notebook.
 
 ---
 
