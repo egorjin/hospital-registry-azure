@@ -26,7 +26,9 @@ No PHI. This is safe portfolio data.
 
 ## 2) Why your CSV link broke (and how this project avoids it)
 
-The CMS Provider Data Catalog often rotates the underlying **download file URL** behind a dataset. That’s why links like “`.../Hospital_General_Information.csv`” or older Data.Medicare.gov export links can start failing.
+The CMS Provider Data Catalog often rotates the underlying **download file URL** behind a dataset. That’s why links like “`.../Hospital_Gen_Info
+
+.csv`” or older Data.Medicare.gov export links can start failing.
 
 **Fix:** don’t hard-code the CSV file URL. Resolve the **current** download URL at runtime using the Provider Data Catalog **metastore API** and the dataset’s stable id:
 - Dataset page (stable id): `xubh-q36u` (Hospital General Information)
@@ -68,9 +70,13 @@ hospital-registry/
 ├── README.md
 ├── .gitignore
 ├── notebooks/
-│   └── 01_hospital_general_information_medallion.py
+│   └── 01_Hospital_Gen_Info
+
+_medallion.py
 ├── adf/
-│   └── pipeline_pl_hospital_general_information_to_medallion.md
+│   └── pipeline_pl_Hospital_Gen_Info
+
+_to_medallion.md
 └── docs/
     └── managed-identity-notes.md
 ```
@@ -94,11 +100,23 @@ hospital-registry/
    - `gold`
 
 Target layout:
-- `bronze/hospital_general_information/run_date=YYYY-MM-DD/hospital_general_information.csv`
-- `silver/hospital_general_information/` (Delta)
-- `gold/hospital_general_information/hospitals_by_state/` (Delta)
-- `gold/hospital_general_information/rating_distribution/` (Delta)
-- `gold/hospital_general_information/hospitals_by_type/` (Delta)
+- `bronze/Hospital_Gen_Info
+
+/run_date=YYYY-MM-DD/Hospital_Gen_Info
+
+.csv`
+- `silver/Hospital_Gen_Info
+
+/` (Delta)
+- `gold/Hospital_Gen_Info
+
+/hospitals_by_state/` (Delta)
+- `gold/Hospital_Gen_Info
+
+/rating_distribution/` (Delta)
+- `gold/Hospital_Gen_Info
+
+/hospitals_by_type/` (Delta)
 
 ### Step 2 — Create ADF + Managed Identity (no secrets)
 1. Create Data Factory
@@ -119,10 +137,14 @@ To do “no secrets” correctly for Databricks reading/writing ADLS:
 See `docs/managed-identity-notes.md` for a practical checklist.
 
 ### Step 4 — Import the notebook
-Upload `notebooks/01_hospital_general_information_medallion.py` to your Databricks workspace.
+Upload `notebooks/01_Hospital_Gen_Info
+
+_medallion.py` to your Databricks workspace.
 
 ### Step 5 — Build the ADF pipeline (orchestrate notebook)
-Follow `adf/pipeline_pl_hospital_general_information_to_medallion.md`.
+Follow `adf/pipeline_pl_Hospital_Gen_Info
+
+_to_medallion.md`.
 
 Default parameters:
 - `dataset_id = xubh-q36u`
