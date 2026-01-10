@@ -68,12 +68,8 @@ hospital-registry/
 ├── .gitignore
 ├── notebooks/
 │   └── 01_hospital_general_info_medallion.py
-
-
 ├── adf/
 │   └── Hospital_Gen_Info.md
-
-
 └── docs/
     └── managed-identity-notes.md
 ```
