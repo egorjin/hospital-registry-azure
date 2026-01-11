@@ -165,13 +165,11 @@ Target layout:
       - Node type: `General purpose` lowest (ie 14 GB Memory, 4 Cores)
       - [X] Terminate after 20 minutes
    5. Click `Create`
-<br/>
 
- ![](./images/db-compute.png)
-<br/>
+   <img width="921" height="580" alt="image" src="https://github.com/user-attachments/assets/cde542e9-a1c6-4592-bcec-77edeecd5e14" />
 
-### Step 4.1 — Import the notebook
-Upload `notebooks/01_hospital_general_info_medallion.py` to your Databricks workspace.
+ ### Step 4.1 — Import the notebook
+   - Upload `notebooks/01_hospital_general_info_medallion.py` to your Databricks workspace.
 
 ```python
 """
