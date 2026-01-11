@@ -113,18 +113,24 @@ Target layout:
   3. Credential name: `hospital-cred`
   4. Access connector ID: `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector` (**FOUND BELOW**)
      - Azure portal → `rg-hospital-registry`(resource group) → `adb-hospital-registry` (db resource) →  (in middle of screen) Managed Resource Group: `databricks-rg-adb-hospital-registry-ay3xi2s24t262` → `unity-catalog-access-connector` (link at bottom)
-     <img width="552" height="179" alt="image" src="https://github.com/user-attachments/assets/ee42ad7b-6353-4255-a2a1-6144470dbe40" />
-     <img width="1145" height="473" alt="image" src="https://github.com/user-attachments/assets/3ccf46f6-37d8-463c-b315-ffd44ecd40fd" />
-     <img width="699" height="79" alt="image" src="https://github.com/user-attachments/assets/47bd0f05-ff82-469a-ae69-2d0d19a195ef" /> <br>
+     - <img width="552" height="179" alt="image" src="https://github.com/user-attachments/assets/ee42ad7b-6353-4255-a2a1-6144470dbe40" />
+     - <img width="1145" height="473" alt="image" src="https://github.com/user-attachments/assets/3ccf46f6-37d8-463c-b315-ffd44ecd40fd" />
+     - <img width="699" height="79" alt="image" src="https://github.com/user-attachments/assets/47bd0f05-ff82-469a-ae69-2d0d19a195ef" /> 
      - COPY Resource ID : `/subscriptions/ca8b577e-9fe../accessConnectors/unity-catalog-access-connector`
-  5. Grant Privledges **ALL PRIVLEDGES** to Credential
+     </br>
+  5. Grant Privledges `ALL PRIVLEDGES` to Credential
+     - Under Credential `hospital-cred` → `Permissions`  → `Grant`
+     - Grant on hospital-cred (screen)
+        - Principals: <USER_ACC>
+        - Privledges: `ALL PRIVLEDGES`
+        - click `Confirm`
      - <img width="800" height="306" alt="image" src="https://github.com/user-attachments/assets/9c523519-641e-42d3-8f48-ed9a1aef646f" />
-
-  6. Grant the correct RBAC role on the storage account (or container)
-     In the Azure Portal → Storage account (storehospitalregistry) → Access Control (IAM) → Add role assignment:
-     Give the credential’s identity:
-     Storage Blob Data Contributor (this is the big one: read + write + list)
+     </br>
+  6. Grant RBAC Role on storage account
+     - Azure Portal → Storage account (storehospitalregistry) → Access Control (IAM) → Add role assignment:
+     - Give the credential’s identity: `Storage Blob Data Contributor` (this is the big one: read + write + list)
      - <img width="1125" height="670" alt="image" src="https://github.com/user-attachments/assets/a66e9d02-37c5-4755-a368-44fac9647b10" />
+      </br>
 
   #### Create External Locations
   1. `Catalog` → `External Data` → `Create external location`
