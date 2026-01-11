@@ -147,8 +147,30 @@ Target layout:
         1. External location name: `gold`
         2. External location name: `abfss://gold@storehospitalregistry .dfs.core.windows.net/` (**endpoint to ADLS container**)
         3. Storage Credential: `earthqual-cred` (from 5.3)
- 
-### Step 4 — Import the notebook
+
+
+
+### Step 4 — Databricks Deployment
+  - Launch Databricks workspace `earthquake-db`
+  - What each Tab does:
+    - `Workspace`: Store/Create Notebooks
+    - `Catalog`:   Connect ADLS storage to be maniupulate
+    - `Compute`:   Notebooks run here
+   ### Create Compute instance
+   1. Click create
+   2. Policy: `Unrestricted` - `Single Node`
+   3. Access mode: `Single user`
+   4. Performance
+      - [ ] Use Photon Acceleration (Not needed)
+      - Node type: `General purpose` lowest (ie 14 GB Memory, 4 Cores)
+      - [X] Terminate after 20 minutes
+   5. Click `Create compute`
+<br/>
+
+   ![](./images/db-compute.png)
+
+<br/>
+### Step 4.1 — Import the notebook
 Upload `notebooks/01_hospital_general_info_medallion.py` to your Databricks workspace.
 
 ```python
@@ -446,6 +468,9 @@ except Exception as e:
     print("Validation skipped:", e)
 
 ```
+
+
+
 
 ### Step 5 — Build the ADF pipeline (orchestrate notebook)
 Follow `adf/Hospital_Gen_Info.md`.
